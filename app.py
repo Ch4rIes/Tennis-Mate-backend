@@ -98,6 +98,32 @@ def get_all_posts():
         })
     return jsonify(rows)
 
+@app.route('/delete_post/<id>' , methods=['DELETE'])
+def delete_post(id):
+    print(id)
+    try:
+        todel = Post.query.get(id)
+        db.session.delete(todel)
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return jsonify(id)
+
+@app.route('/add_person/<id>' , methods=['POST'])
+def add_person(id):
+    print(id)
+    try:
+        toadd = Post.query.get(id)
+        toadd.currentPeople = toadd.currentPeople + 1 
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return jsonify(id)
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
