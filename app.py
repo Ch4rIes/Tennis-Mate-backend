@@ -76,7 +76,9 @@ def delete_user(id):
 @app.route('/create_post' , methods=['POST'])
 def createPost():
     req = request.get_json()
-    new_post = Post(id= req['id'] , courtName = req['courtName'] , email = req['email'] , img_url = req['img_url'] , date =['date'], location = req['location'], skillLevel = req['skillLevel'], eventSize= req['eventSize'], currentPeople = req['currentPeople'])
+    print(req)
+    new_post = Post(id= req['id'] , courtName = req['courtName'] , email = req['email'] , img_url = req['img_url'] , date =req['date'], location = req['location'], skillLevel = req['skillLevel'], eventSize= req['eventSize'], currentPeople = req['currentPeople'])
+    print(new_post)
     db.session.add(new_post)
     db.session.commit()
     return jsonify(req)
@@ -85,7 +87,7 @@ def createPost():
 def get_all_posts():   
     rows = []
     for posts_key in Post.query.all():
-        each_post = Post.query.get(posts_key.user_id)
+        each_post = Post.query.get(posts_key.id)
         rows.append({
             "id": each_post.id,
             "courtName": each_post.courtName,
